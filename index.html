@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lecturas Cruzadas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <svg class="svg-definitions" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="silhouette-outline" color-interpolation-filters="sRGB">
+          <feMorphology in="SourceAlpha" operator="erode" radius="4" result="inset" />
+          <feComposite in="SourceAlpha" in2="inset" operator="out" result="edge" />
+          <feFlood flood-color="#000" result="black" />
+          <feComposite in="black" in2="edge" operator="in" />
+        </filter>
+      </defs>
+    </svg>
+    <main class="game-shell">
+      <section class="intro" id="intro" aria-label="Bienvenida a Lecturas Cruzadas">
+        <button class="options-button" type="button" aria-label="Opciones" data-i18n-aria="options">⚙</button>
+        <div class="sky-decoration" aria-hidden="true">
+          <span class="cloud cloud-one"></span>
+          <span class="cloud cloud-two"></span>
+          <span class="spark spark-one">✦</span>
+          <span class="spark spark-two">✦</span>
+          <span class="spark spark-three">✦</span>
+        </div>
+
+        <div class="mascot mascot-left" aria-hidden="true">
+          <div class="ear ear-left"></div>
+          <div class="ear ear-right"></div>
+          <div class="face">
+            <span class="eye eye-left"></span>
+            <span class="eye eye-right"></span>
+            <span class="cheek cheek-left"></span>
+            <span class="cheek cheek-right"></span>
+            <span class="mouth"></span>
+          </div>
+        </div>
+
+        <div class="mascot mascot-right" aria-hidden="true">
+          <div class="ear ear-left"></div>
+          <div class="ear ear-right"></div>
+          <div class="face">
+            <span class="eye eye-left"></span>
+            <span class="eye eye-right"></span>
+            <span class="cheek cheek-left"></span>
+            <span class="cheek cheek-right"></span>
+            <span class="mouth"></span>
+          </div>
+        </div>
+
+        <h1>LECTURAS CRUZADAS</h1>
+        <p class="tagline" data-i18n="tagline">¡Deja hablar a tus emociones!</p>
+
+        <button class="start-button" id="startButton" type="button">
+          <span data-i18n="chooseAvatar">Elegir avatar</span>
+          <span class="arrow">➜</span>
+        </button>
+      </section>
+
+      <section class="setup is-hidden" id="setup" aria-label="Crea tu perfil" data-i18n-aria="profileAria">
+        <button class="options-button" type="button" aria-label="Opciones" data-i18n-aria="options">⚙</button>
+        <div class="setup-header">
+          <button class="back-button" id="backButton" type="button" aria-label="Volver" data-i18n-aria="back">←</button>
+          <div>
+            <p class="eyebrow" data-i18n="profileEyebrow">PERSONALIZA TU PERFIL</p>
+            <h2 data-i18n="profileTitle">Crea tu perfil</h2>
+          </div>
+          <span class="step-badge" data-i18n="profileStep">2 / 3</span>
+        </div>
+
+        <button class="profile-avatar" id="avatarPreview" type="button" aria-label="Cambiar avatar">
+          😀
+        </button>
+        <p class="avatar-help" data-i18n="avatarHelp">Toca tu avatar para cambiarlo</p>
+
+        <form class="name-panel" id="nameForm">
+          <label for="playerName" data-i18n="nameLabel">Escribe tu nombre</label>
+          <div class="name-row">
+            <input id="playerName" name="playerName" type="text" maxlength="16" placeholder="Escribe tu nombre" data-i18n-placeholder="namePlaceholder" autocomplete="off" required />
+            <button class="continue-button" type="submit"><span data-i18n="continue">Continuar</span> <span>➜</span></button>
+          </div>
+        </form>
+      </section>
+
+      <section class="avatar-picker is-hidden" id="avatarPicker" aria-label="Elige tu avatar" data-i18n-aria="avatarPickerAria">
+        <button class="options-button" type="button" aria-label="Opciones" data-i18n-aria="options">⚙</button>
+        <div class="setup-header">
+          <button class="back-button" id="closePickerButton" type="button" aria-label="Volver a tu perfil" data-i18n-aria="backProfile">←</button>
+          <div>
+            <p class="eyebrow" data-i18n="avatarOptions">50 OPCIONES</p>
+            <h2 data-i18n="avatarTitle">Elige tu avatar</h2>
+          </div>
+          <span class="step-badge">50</span>
+        </div>
+        <div class="character-grid" id="characterGrid" role="radiogroup" aria-label="Elige entre 50 avatares" data-i18n-aria="avatarGroup"></div>
+      </section>
+
+      <section class="lobby is-hidden" id="lobby" aria-label="Sala para jugar con amigos" data-i18n-aria="lobbyAria">
+        <button class="options-button" type="button" aria-label="Opciones" data-i18n-aria="options">⚙</button>
+        <button class="back-button lobby-back" id="lobbyBackButton" type="button" aria-label="Volver" data-i18n-aria="back">←</button>
+        <div class="lobby-heading">
+          <div class="lobby-avatar" id="lobbyAvatar">😀</div>
+          <p class="eyebrow" data-i18n="lobbyEyebrow">TU PERFIL ESTÁ LISTO</p>
+          <h2 id="lobbyGreeting">¡Hola!</h2>
+          <p data-i18n="lobbyIntro">¡Juega con tus amigos!</p>
+        </div>
+
+        <div class="lobby-cards local-lobby-cards">
+          <article class="lobby-card local-lobby-card">
+            <span class="lobby-icon" aria-hidden="true">✦</span>
+            <h3 data-i18n="localGameTitle">Jugar en este dispositivo</h3>
+            <p data-i18n="localGameInfo">Agrega a quienes jugarán y pasen el dispositivo por turnos.</p>
+            <div class="local-player-lobby">
+              <p class="player-count" id="playerCount"></p>
+              <ul class="player-list" id="playerList"></ul>
+              <form class="local-player-form" id="addLocalPlayerForm">
+                <label for="localPlayerName" data-i18n="localPlayerNameLabel">Nombre del jugador</label>
+                <div class="local-player-fields">
+                  <input id="localPlayerName" type="text" maxlength="16" placeholder="Nombre" data-i18n-placeholder="localPlayerNamePlaceholder" autocomplete="off" required />
+                  <label class="local-avatar-label" for="localPlayerAvatar" data-i18n="localPlayerAvatarLabel">Avatar</label>
+                  <select id="localPlayerAvatar" aria-label="Avatar" data-i18n-aria="localPlayerAvatarLabel"></select>
+                </div>
+                <button class="secondary-button add-local-player-button" id="addLocalPlayerButton" type="submit" data-i18n="addLocalPlayer">Añadir jugador</button>
+              </form>
+              <p class="player-limit-note" data-i18n="playerLimit">Entre 1 y 10 jugadores.</p>
+              <button class="continue-button start-game-button" id="startGameButton" type="button" data-i18n="startGame">Iniciar partida</button>
+            </div>
+          </article>
+        </div>
+
+        <p class="local-note" data-i18n="localNote">Partida local: todo se guarda en este dispositivo.</p>
+      </section>
+
+      <section class="options-panel is-hidden" id="optionsPanel" role="dialog" aria-labelledby="optionsTitle">
+        <div class="options-panel-heading">
+          <h2 id="optionsTitle" data-i18n="optionsTitle">Opciones</h2>
+          <button class="options-close" id="closeOptionsButton" type="button" aria-label="Cerrar opciones" data-i18n-aria="closeOptions">×</button>
+        </div>
+        <label for="languageSelect" data-i18n="languageLabel">Idioma</label>
+        <select id="languageSelect">
+          <option value="es">Español</option>
+          <option value="en">English</option>
+        </select>
+      </section>
+
+      <section class="game-page is-hidden" id="gamePage" aria-label="Partida" data-i18n-aria="gameAria">
+        <button class="options-button" type="button" aria-label="Opciones" data-i18n-aria="options">⚙</button>
+        <button class="music-toggle-button" id="musicToggleButton" type="button" aria-label="Activar música" title="Activar música" data-i18n-aria="musicEnable" aria-pressed="false">♪</button>
+        <button class="back-button game-back" id="backToLobbyButton" type="button" aria-label="Volver a la sala" data-i18n-aria="backLobby">←</button>
+        <header class="game-heading" id="gameHeading">
+          <p class="eyebrow" id="gameEyebrow">RONDA 1</p>
+          <h2 id="gameTitle">Tus cartas</h2>
+          <p id="gameInfo">Recibiste una carta al azar de cada tipo.</p>
+          <span class="music-status" id="musicStatus" role="status" hidden></span>
+        </header>
+        <div class="card-round" id="cardRound">
+          <div class="card-hand" id="cardOptions" aria-live="polite"></div>
+          <button class="continue-button next-card-button" id="nextCardButton" type="button" data-i18n="nextCard" hidden>Continuar</button>
+        </div>
+        <section class="drawing-board" id="drawingBoard" hidden aria-label="Tablero para dibujar">
+          <div class="board-toolbar">
+            <div class="board-caption">
+              <p class="eyebrow" data-i18n="boardEyebrow">TU TABLERO</p>
+              <h3 id="boardPrompt">Dibuja el contorno de tu carta</h3>
+              <p data-i18n="boardHint">Usa la silueta como guía y dibuja encima.</p>
+            </div>
+            <div class="draw-timer" role="timer" aria-label="Tiempo restante" data-i18n-aria="timeRemaining">
+              <span data-i18n="timeRemaining">Tiempo restante</span>
+              <strong id="drawTimer">04:00</strong>
+            </div>
+          </div>
+          <div class="drawing-tools" id="drawingTools">
+              <div class="tool-label selected-color-control">
+                <span data-i18n="selectedColor">Color elegido</span>
+                <span class="selected-color-value">
+                  <span class="selected-color-swatch" id="selectedColorSwatch" role="img"></span>
+                  <strong id="selectedColorName"></strong>
+                </span>
+              </div>
+              <div class="drawing-tool-picker" id="drawingToolPicker" role="group" aria-label="Herramientas de dibujo" data-i18n-aria="drawingTools">
+                <button class="drawing-tool-button selected" id="pencilToolButton" type="button" aria-pressed="true" data-tool="pencil">
+                  <span aria-hidden="true">✎</span><span data-i18n="pencilTool">Lápiz</span>
+                </button>
+                <button class="drawing-tool-button" id="markerToolButton" type="button" aria-pressed="false" data-tool="marker">
+                  <span aria-hidden="true">🖍</span><span data-i18n="markerTool">Marcador</span>
+                </button>
+                <button class="drawing-tool-button" id="eraserToolButton" type="button" aria-pressed="false" data-tool="eraser">
+                  <span aria-hidden="true">▱</span><span data-i18n="eraserTool">Borrador</span>
+                </button>
+              </div>
+              <label class="tool-label brush-size-label">
+                <span data-i18n="brushSize">Grosor</span>
+                <input id="brushSize" type="range" min="2" max="18" value="6" aria-label="Grosor del lápiz" data-i18n-aria="brushSize" />
+              </label>
+              <label class="tool-label brush-intensity-label">
+                <span data-i18n="brushIntensity">Intensidad</span>
+                <input id="brushIntensity" type="range" min="10" max="100" step="10" value="100" aria-label="Intensidad del color" data-i18n-aria="brushIntensity" />
+                <output id="brushIntensityValue" for="brushIntensity">100%</output>
+              </label>
+              <button class="secondary-button clear-button" id="clearDrawingButton" type="button" data-i18n="clearDrawing">Borrar dibujo</button>
+              <button class="continue-button finish-drawing-button" id="finishDrawingButton" type="button" data-i18n="finishDrawing">Terminar dibujo</button>
+          </div>
+          <div class="selected-card-prompts" id="selectedCardPrompts" aria-label="Tus cartas" data-i18n-aria="selectedCardsTitle">
+            <p data-i18n="selectedCardsTitle">Tus cartas</p>
+            <div class="selected-card-list" id="selectedCardList"></div>
+          </div>
+          <div class="sticker-tray" id="stickerTray">
+            <p data-i18n="stickerHint">Toca el elemento para añadirlo o arrástralo al dibujo.</p>
+            <button class="graphic-sticker-source" id="graphicStickerButton" type="button" draggable="true" aria-label="Añadir elemento gráfico como sticker">
+              <span class="graphic-sticker-icon" id="graphicStickerIcon" aria-hidden="true"></span>
+              <span id="graphicStickerName"></span>
+            </button>
+          </div>
+          <div class="drawing-surface" id="drawingSurface">
+            <div class="target-silhouette" id="targetSilhouette" aria-hidden="true"></div>
+            <canvas id="drawingCanvas" aria-label="Lienzo para dibujar" data-i18n-aria="drawingCanvas"></canvas>
+          </div>
+        </section>
+        <section class="guessing-phase" id="guessingPhase" hidden aria-label="Adivina la intención" data-i18n-aria="guessingAria">
+          <div class="guessing-heading">
+            <p class="eyebrow" id="guessingEyebrow" data-i18n="guessingEyebrow">FASE DE ADIVINANZA</p>
+            <h3 id="guessingTitle" data-i18n="guessTitle">¿Qué intención quiso transmitir?</h3>
+            <p id="guessTurnPrompt"></p>
+            <p id="guessInstructions" data-i18n="guessInstructions">Pasa el dispositivo al jugador indicado y elige una respuesta. Nadie verá la solución hasta que todos hayan adivinado.</p>
+          </div>
+          <div class="intent-choices" id="intentChoices" aria-live="polite"></div>
+          <button class="continue-button next-card-button guess-action-button" id="guessActionButton" type="button" hidden></button>
+          <div class="guess-results" id="guessResults" hidden>
+            <h4 data-i18n="guessResultsTitle">Resultado</h4>
+            <p id="guessCorrectAnswer"></p>
+            <ul class="guess-results-list" id="guessResultsList"></ul>
+            <section class="scoreboard" aria-labelledby="scoreboardTitle">
+              <h4 id="scoreboardTitle" data-i18n="scoreboardTitle">Tabla de puntajes</h4>
+              <p class="score-rule" data-i18n="scoreRule">Cada acierto vale 1 punto; quien dibuja recibe 1 si alguien acierta.</p>
+              <table id="scoreboardTable" aria-label="Clasificación de jugadores" data-i18n-aria="scoreboardLabel">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="scoreRank">Puesto</th>
+                    <th scope="col" data-i18n="scorePlayer">Jugador</th>
+                    <th scope="col" data-i18n="scorePoints">Puntos</th>
+                  </tr>
+                </thead>
+                <tbody id="scoreboardRows"></tbody>
+              </table>
+            </section>
+            <button class="continue-button new-game-button" id="newGameButton" type="button" data-i18n="newGame">Nueva partida</button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
